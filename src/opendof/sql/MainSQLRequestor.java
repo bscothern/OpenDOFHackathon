@@ -44,7 +44,6 @@ public class MainSQLRequestor {
         
         if(val == 1){
         
-        requestor.sendSetRequest(true);
         
         List<DOFValue> d = null;
         try {

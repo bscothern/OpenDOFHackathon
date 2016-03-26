@@ -16,9 +16,9 @@ public class DemoConstructor extends SQLConstructor
 		switch (split[0])
 		{
 		case "UserTable":
-			return "select * from users";	
+			return "select * from student";	
 		case "getByName":
-			return "select * from user where name = '"+ split[1] + "'";
+			return "select * from student where name like '%"+ split[1] + "%'";
 		default:
 			break;
 		}

@@ -44,37 +44,13 @@ public class SQLRequestor {
 		 providerObject = objectMap.get(_oidString);  
 	 }
 	 
-	 public boolean sendSetRequest(boolean _active){
-	        try{
-	        	
-	            DOFBoolean setValue = new DOFBoolean(_active);
-	            
-	            if(providerObject != null)
-	            {
-	            	System.out.println("After");
-	            	providerObject.set(TBAInterface.PROPERTY_ALARM_ACTIVE, setValue, TIMEOUT);
-	            	System.out.println("Before");
-	            	return true;
-	            }
-	            
-	            return false;
-	        } catch (DOFProviderException e) {
-	            return false;
-	        } catch (DOFErrorException e) {
-	            return false;
-	        } catch (DOFException e) {
-	            return false;
-	        }
-	  }
-	 
-	 
 	 public List<DOFValue> sendSelectQuery(String _query) throws DOFException{
 	    	
 		 if(mySystem.getState().isAuthorized())
 	    	{
 		    	try{
 		            DOFString query = new DOFString(_query);
-		            DOFResult<List<DOFValue>> myResults = providerObject.invoke(TBAInterface.METHOD_SELECT_QUERY, 5000, query);        
+		            DOFResult<List<DOFValue>> myResults = providerObject.invoke(SQLInterface.METHOD_SELECT_QUERY, 5000, query);        
 		            List<DOFValue> myValueList = myResults.get();
 		            for(DOFValue dv: myValueList){
 		            	System.out.println(dv);
