@@ -18,11 +18,7 @@ import org.opendof.core.oal.DOFValue;
 import org.opendof.core.oal.value.DOFBoolean;
 import org.opendof.core.oal.value.DOFDateTime;
 import org.opendof.core.oal.value.DOFString;
-<<<<<<< HEAD
 
-
-=======
->>>>>>> origin/master
 
 public class SQLRequestor {
 

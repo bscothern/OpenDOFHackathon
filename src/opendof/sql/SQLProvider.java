@@ -1,5 +1,6 @@
 package opendof.sql;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,10 +10,12 @@ import org.opendof.core.oal.DOFRequest;
 import org.opendof.core.oal.DOFSystem;
 import org.opendof.core.oal.DOFType;
 import org.opendof.core.oal.DOFValue;
+import org.opendof.core.oal.DOFErrorException;
 import org.opendof.core.oal.DOFInterface.Method;
 import org.opendof.core.oal.DOFInterface.Property;
 import org.opendof.core.oal.DOFOperation.Provide;
 import org.opendof.core.oal.value.DOFBoolean;
+import org.opendof.core.oal.value.DOFString;
 
 import java.sql.*;
 
@@ -52,10 +55,6 @@ public class SQLProvider
 			Class.forName ("com.mysql.jdbc.Driver").newInstance ();
 			con = DriverManager.getConnection (url, userName, password);
 
-			//DriverManager.registerDriver (new oracle.jdbc.driver.OracleDriver());
-			//stmt=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			//stmt = con.createStatement();
-			//stmt=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		} catch(Exception e) {
 			System.err.println("Unable to open mysql jdbc connection. The error is as follows,\n");
 			System.err.println(e.getMessage());
@@ -135,12 +134,51 @@ public class SQLProvider
 		@Override
 		public void invoke(Provide operation, DOFRequest.Invoke request, Method method, List<DOFValue> parameters)
 		{
-			Date usableResult = DOFType.asDate(parameters.get(0));
-			alarmTime = usableResult;
-
-			DOFBoolean myDOFBoolean = new DOFBoolean(isActive);
-			request.respond(myDOFBoolean);
-			lastOp = "invoke";
+//			Date usableResult = DOFType.asDate(parameters.get(0));
+//			alarmTime = usableResult;
+//
+//			DOFBoolean myDOFBoolean = new DOFBoolean(isActive);
+//			request.respond(myDOFBoolean);
+//			lastOp = "invoke";
+			System.out.println("Method invoked");
+			String query = DOFType.asString(parameters.get(0));
+			String results = sqlConsturctor.construction(query);
+			boolean valid = sqlValidator.validateQuery(results);
+			if (valid)
+			{
+				String[] table = null;
+				try
+				{
+					PreparedStatement preparedStatement = con.prepareStatement(results);
+					ResultSet resultSet = preparedStatement.executeQuery();
+					ResultSetMetaData rsmd = resultSet.getMetaData();
+					table = new String[rsmd.getColumnCount()];
+					int currentRow = 0;
+					while(resultSet.next())
+					{
+						String record = "";
+						for (int col = 1; col < rsmd.getColumnCount(); col++)
+							record += resultSet.getString(col) + "\n";
+						table[currentRow] = record;
+						currentRow++;
+					}
+					preparedStatement.close();
+					
+				}
+				catch (SQLException e)
+				{
+					e.printStackTrace();
+				}
+				List<DOFValue> response = new ArrayList<DOFValue>();
+				for (int i = 0; i < table.length; i++)
+				{
+					DOFString s = new DOFString(table[i]);
+					response.add(s);
+				}
+				request.respond(response);
+			}
+			else
+				request.respond(new DOFErrorException("Invalid query"));
 		}
 	}
 
