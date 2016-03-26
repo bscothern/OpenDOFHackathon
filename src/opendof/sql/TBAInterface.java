@@ -55,7 +55,6 @@ public class TBAInterface {
     			.addMethod(8, new DOFType[] { QUERY }, new DOFType[] { QUERY_COLUMN })
     			.build();
     	
-
     	PROPERTY_ALARM_ACTIVE = DEF.getProperty(PROPERTY_ALARM_ACTIVE_ID);
     	PROPERTY_ALARM_TIME_VALUE = DEF.getProperty(PROPERTY_ALARM_TIME_VALUE_ID);
     	METHOD_SET_NEW_TIME = DEF.getMethod(METHOD_SET_NEW_TIME_ID);
