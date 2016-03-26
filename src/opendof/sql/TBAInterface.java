@@ -12,7 +12,7 @@ public class TBAInterface {
 	public static final DOFType ALARM_TIME = DOFDateTime.TYPE;
 	
 	public static final DOFInterface DEF;
-	public static final DOFInterfaceID IID = DOFInterfaceID.create("[63:{01000034}]");
+	public static final DOFInterfaceID IID = DOFInterfaceID.create("[63:{87654321}]");
 
 	public static final int PROPERTY_ALARM_ACTIVE_ID = 1;
 	public static final int PROPERTY_ALARM_TIME_VALUE_ID = 2;
