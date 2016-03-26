@@ -145,21 +145,24 @@ public class SQLProvider
 			boolean valid = sqlValidator.validateQuery(results);
 			if (valid)
 			{
-				String[] table = null;
+//				List<String> table = null;
+				String record = "";
 				try
 				{
 					PreparedStatement preparedStatement = con.prepareStatement(results);
 					ResultSet resultSet = preparedStatement.executeQuery();
+					
 					ResultSetMetaData rsmd = resultSet.getMetaData();
-					table = new String[rsmd.getColumnCount()];
-					int currentRow = 0;
+//					table = new ArrayList<String>();
+//					int currentRow = 0;
 					while(resultSet.next())
 					{
-						String record = "";
+						
 						for (int col = 1; col < rsmd.getColumnCount(); col++)
-							record += resultSet.getString(col) + "\n";
-						table[currentRow] = record;
-						currentRow++;
+							record += resultSet.getString(col) + "\t";
+						record += "\n";
+//						table.add(record);
+//						currentRow++;
 					}
 					preparedStatement.close();
 					
@@ -168,15 +171,18 @@ public class SQLProvider
 				{
 					e.printStackTrace();
 				}
-				List<DOFValue> response = new ArrayList<DOFValue>();
-				for (int i = 0; i < table.length; i++)
-				{
-					DOFString s = new DOFString(table[i]);
-					response.add(s);
-				}
-				request.respond(response);
+//				List<DOFValue> response = new ArrayList<DOFValue>();
+//				for (int i = 0; i < table.size(); i++)
+//				{
+//					DOFString s = new DOFString(table.get(i));
+//					response.add(s);
+//				}
+				System.out.println("Sent back proper response");
+//				request.respond(response.get(0));
+				request.respond(new DOFString(record));
 			}
 			else
+				System.out.println("Sent back exception");
 				request.respond(new DOFErrorException("Invalid query"));
 		}
 	}

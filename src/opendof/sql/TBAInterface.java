@@ -10,9 +10,8 @@ import org.opendof.core.oal.value.DOFString;
 public class TBAInterface {
 	
 	
-	
 	public static final DOFType QUERY = new DOFString.Type(3, 200);
-	public static final DOFType QUERY_COLUMN = new DOFString.Type(3, 10);
+	public static final DOFType QUERY_COLUMN = new DOFString.Type(3, 2000);
 	public static final DOFType IS_ACTIVE = DOFBoolean.TYPE;
 	public static final DOFType ALARM_TIME = DOFDateTime.TYPE;
 	

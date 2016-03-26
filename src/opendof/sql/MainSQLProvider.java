@@ -19,13 +19,13 @@ public class MainSQLProvider
         providerDofAbstraction.createServer("0.0.0.0", 3567);
         //providerDofAbstraction.createConnection("155.99.175.143", 3567);
         //SQLProvider provider = new SQLProvider(providerDofAbstraction.createDOFSystem("provider"));
-        SQLProvider provider = new SQLProvider(providerDofAbstraction.createDOFSystem("provider"), url, username, pass, null, null);
+        SQLProvider provider = new SQLProvider(providerDofAbstraction.createDOFSystem("provider"), url, username, pass, new DemoConstructor(), new DemoValidator());
         System.out.println("Running provider server");
         
         Scanner sc = new Scanner(System.in);
         String in = "";
-        while (!(in = sc.nextLine()).equals("stop"));
-        	
+        while (!(in = sc.nextLine()).equals("stop"))
+        	System.exit(1);
 
 	}
 
