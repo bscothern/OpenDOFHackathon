@@ -73,6 +73,7 @@ public class SQLProvider
 			DOFBoolean myDOFBoolean = new DOFBoolean(isActive);
 			request.respond(myDOFBoolean);
 			lastOp = "get";
+			System.out.println("Requestor requested: " + isActive);
 		}
 
 		@Override
@@ -81,6 +82,7 @@ public class SQLProvider
 			isActive = DOFType.asBoolean(value);
 			request.respond();
 			lastOp = "set";
+			System.out.println("Requestor set: " + value);
 		}
 
 		@Override
