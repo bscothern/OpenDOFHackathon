@@ -11,7 +11,7 @@ public class MainSQLProvider
 		
 		DOFAbstraction providerDofAbstraction = new DOFAbstraction();
         providerDofAbstraction.createDOF();
-        providerDofAbstraction.createServer("localhost", 3567);
+        providerDofAbstraction.createServer("0.0.0.0", 3567);
         //providerDofAbstraction.createConnection("155.99.175.143", 3567);
         SQLProvider provider = new SQLProvider(providerDofAbstraction.createDOFSystem("provider"));
         System.out.println("Running provider server");
