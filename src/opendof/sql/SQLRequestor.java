@@ -1,6 +1,5 @@
 package opendof.sql;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,52 +24,45 @@ public class SQLRequestor {
 	DOFSystem mySystem;
 	DOFObject providerObject;
 	DOFObjectID providerObjectID = DOFObjectID.create("[63:{12345678}]");
-	
+
 	Map<String, DOFObject> objectMap = new HashMap<String, DOFObject>(2);
-	
+
 	DOFOperation.Get activeGetOperation = null;
-    DOFOperation.Set activeSetOperation = null;
-    DOFOperation.Invoke activeInvokeOperation = null;
-    
-    int TIMEOUT = 1000;
-    int MIN_PERIOD = 2000;
-	 
+	DOFOperation.Set activeSetOperation = null;
+	DOFOperation.Invoke activeInvokeOperation = null;
+
+	int TIMEOUT = 1000;
+	int MIN_PERIOD = 2000;
+
 	public SQLRequestor(DOFSystem system){
 		mySystem = system;
 		providerObject = mySystem.createObject(providerObjectID);
 	}
-	
-	 public void setCurrentRequestor(String _oidString){
-		 providerObject = objectMap.get(_oidString);  
-	 }
-	 
-	 public List<DOFValue> sendSelectQuery(String _query) throws DOFException{
-	    	
-		 if(mySystem.getState().isAuthorized())
-	    	{
-		    	try{
-		            DOFString query = new DOFString(_query);
-		            DOFResult<List<DOFValue>> myResults = providerObject.invoke(SQLInterface.METHOD_SELECT_QUERY, 5000, query);        
-		            List<DOFValue> myValueList = myResults.get();
-		            for(DOFValue dv: myValueList){
-		            	System.out.println(dv);
-		            }
-		            return myValueList;
-		        } catch (DOFException e) {
-		            System.err.println("Invoke failed: " + e.getMessage());
-		            throw e;
-		        } 
-	    	} else
-	    	{
-	    		//The system is not ready yet.
-	    		return null;
-	    	}
-	    } 
-	 
-	 
-	 
-	 
-	
-	
-	
+
+	public void setCurrentRequestor(String _oidString){
+		providerObject = objectMap.get(_oidString);  
+	}
+
+	public List<DOFValue> sendSelectQuery(String _query) throws DOFException{
+
+		if(mySystem.getState().isAuthorized())
+		{
+			try{
+				DOFString query = new DOFString(_query);
+				DOFResult<List<DOFValue>> myResults = providerObject.invoke(SQLInterface.METHOD_SELECT_QUERY, 5000, query);        
+				List<DOFValue> myValueList = myResults.get();
+				for(DOFValue dv: myValueList){
+					System.out.println(dv);
+				}
+				return myValueList;
+			} catch (DOFException e) {
+				System.err.println("Invoke failed: " + e.getMessage());
+				throw e;
+			} 
+		} else
+		{
+			//The system is not ready yet.
+			return null;
+		}
+	} 
 }

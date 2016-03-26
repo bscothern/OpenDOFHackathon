@@ -1,6 +1,5 @@
 package opendof.sql;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,13 +33,6 @@ public class SQLProvider
 	SQLConstructor sqlConstructor = null;
 	SQLValidator sqlValidator = null;
 
-	// TODO: remove this constructor
-	public SQLProvider(DOFSystem system)
-	{
-		mySystem = system;
-		init();
-	}
-
 	public SQLProvider(DOFSystem system, String url, String userName, String password) throws Exception {
 		this(system, url, userName, password, null, null);
 	}
@@ -49,7 +41,7 @@ public class SQLProvider
 			SQLConstructor _sqlConstructor, SQLValidator _sqlValidator) throws Exception {
 		mySystem = system;
 		init();
-		
+
 		try{
 			Class.forName ("com.mysql.jdbc.Driver").newInstance ();
 			con = DriverManager.getConnection (url, userName, password);
@@ -66,7 +58,7 @@ public class SQLProvider
 		else {
 			sqlConstructor = new DefaultSQLConstructor();
 		}
-		
+
 		if (_sqlValidator != null) {
 			sqlValidator = _sqlValidator;
 		}
@@ -79,26 +71,6 @@ public class SQLProvider
 	{
 		myObject = mySystem.createObject(myOID);
 		myObject.beginProvide(SQLInterface.DEF, new ProviderListener());
-	}
-
-	public boolean getActive()
-	{
-		return isActive;
-	}
-
-	public void setActive(boolean _active)
-	{
-		isActive = _active;
-	}
-
-	public Date getAlarmTime()
-	{
-		return alarmTime;
-	}
-
-	public void setAlarmTime(Date _alarmTime)
-	{
-		alarmTime = _alarmTime;
 	}
 
 	public String getLastOperation()
@@ -133,59 +105,42 @@ public class SQLProvider
 		@Override
 		public void invoke(Provide operation, DOFRequest.Invoke request, Method method, List<DOFValue> parameters)
 		{
-//			Date usableResult = DOFType.asDate(parameters.get(0));
-//			alarmTime = usableResult;
-//
-//			DOFBoolean myDOFBoolean = new DOFBoolean(isActive);
-//			request.respond(myDOFBoolean);
-//			lastOp = "invoke";
 			System.out.println("Method invoked");
 			String query = DOFType.asString(parameters.get(0));
 			String results = sqlConstructor.construction(query);
 			boolean valid = sqlValidator.validateQuery(results);
 			if (valid)
 			{
-//				List<String> table = null;
 				String record = "";
 				try
 				{
 					PreparedStatement preparedStatement = con.prepareStatement(results);
 					ResultSet resultSet = preparedStatement.executeQuery();
-					
+
 					ResultSetMetaData rsmd = resultSet.getMetaData();
 					for (int col = 1; col < rsmd.getColumnCount(); col++)
 						record += rsmd.getColumnName(col) + "\t";
-//					table = new ArrayList<String>();
-//					int currentRow = 0;
+
 					while(resultSet.next())
 					{
-						
 						for (int col = 1; col < rsmd.getColumnCount(); col++)
 							record += resultSet.getString(col) + "\t";
 						record += "\n";
-//						table.add(record);
-//						currentRow++;
 					}
 					preparedStatement.close();
-					
+
 				}
 				catch (SQLException e)
 				{
 					e.printStackTrace();
 				}
-//				List<DOFValue> response = new ArrayList<DOFValue>();
-//				for (int i = 0; i < table.size(); i++)
-//				{
-//					DOFString s = new DOFString(table.get(i));
-//					response.add(s);
-//				}
+
 				System.out.println("Sent back proper response");
-//				request.respond(response.get(0));
 				request.respond(new DOFString(record));
 			}
 			else
 				System.out.println("Sent back exception");
-				request.respond(new DOFErrorException("Invalid query"));
+			request.respond(new DOFErrorException("Invalid query"));
 		}
 	}
 
@@ -196,7 +151,7 @@ public class SQLProvider
 	 * SQLProvider's call to it's SQLConstructor object. This is not secure but is convenient.
 	 */
 	private class DefaultSQLConstructor extends SQLConstructor {
-		
+
 		/**
 		 * This will fully initialize the SQLConstructor with an empty String[] for the queryType.
 		 */
@@ -221,7 +176,7 @@ public class SQLProvider
 	 * It assumes that everything is valid which is not secure but is convenient.
 	 */
 	private class DefaultSQLValidator extends SQLValidator {
-		
+
 		/**
 		 * There is no typical SQLValidator implementation to validate a SQL query in this method.
 		 * 
