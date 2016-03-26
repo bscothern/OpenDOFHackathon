@@ -10,7 +10,7 @@ public abstract class SQLConstructor implements SQLConstructorInterface
 	{
 		return queryType;
 	}
-	
+
 	public void setQueryType(String[] queryTypes)
 	{
 		if(queryType == null)

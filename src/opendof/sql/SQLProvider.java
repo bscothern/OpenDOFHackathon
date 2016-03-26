@@ -31,12 +31,12 @@ public class SQLProvider
 	SQLConstructor sqlConsturctor = null;
 	SQLValidator sqlValidator = null;
 
+	// TODO: remove this constructor
 	public SQLProvider(DOFSystem system)
 	{
 		mySystem = system;
 		init();
 	}
-	
 
 	public SQLProvider(DOFSystem system, String url, String userName, String password) throws Exception {
 		this(system, url, userName, password, null, null);
@@ -140,9 +140,14 @@ public class SQLProvider
 			lastOp = "invoke";
 		}
 	}
-	
+
 	// Default SQLProvider Delgates
 	private class DefaultSQLConstructor extends SQLConstructor {
+		
+		public DefaultSQLConstructor() {
+			setQueryType(new String[] {});
+		}
+
 		@Override
 		public String construction(String args) {
 			return args;
