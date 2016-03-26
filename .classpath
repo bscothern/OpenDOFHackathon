@@ -9,5 +9,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="DOF_JARS/mysql.jar"/>
+	<classpathentry kind="lib" path="TWITTER_JARS/twitter4j-async-4.0.4.jar"/>
+	<classpathentry kind="lib" path="TWITTER_JARS/twitter4j-core-4.0.4.jar"/>
+	<classpathentry kind="lib" path="TWITTER_JARS/twitter4j-examples-4.0.4.jar"/>
+	<classpathentry kind="lib" path="TWITTER_JARS/twitter4j-media-support-4.0.4.jar"/>
+	<classpathentry kind="lib" path="TWITTER_JARS/twitter4j-stream-4.0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
