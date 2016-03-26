@@ -14,20 +14,64 @@ import org.opendof.core.oal.DOFInterface.Property;
 import org.opendof.core.oal.DOFOperation.Provide;
 import org.opendof.core.oal.value.DOFBoolean;
 
+import java.sql.*;
+
 public class SQLProvider
 {
-
+	// DOF Fields
 	DOFSystem mySystem;
 	DOFObject myObject;
 	DOFObjectID myOID = DOFObjectID.create("[63:{12345678}]");
 	String lastOp = "undefined";
-    boolean isActive = false;
-    Date alarmTime;
+	boolean isActive = false;
+	Date alarmTime;
+
+	// DB Fields
+	Connection con;
+	SQLConstructor sqlConsturctor = null;
+	SQLValidator sqlValidator = null;
 
 	public SQLProvider(DOFSystem system)
 	{
 		mySystem = system;
 		init();
+	}
+	
+
+	public SQLProvider(DOFSystem system, String url, String userName, String password) throws Exception {
+		this(system, url, userName, password, null, null);
+	}
+
+	public SQLProvider(DOFSystem system, String url, String userName, String password,
+			SQLConstructor _sqlConstructor, SQLValidator _sqlValidator) throws Exception {
+		// TODO: Connect to DB
+		try{
+			Class.forName ("com.mysql.jdbc.Driver").newInstance ();
+			con = DriverManager.getConnection (url, userName, password);
+
+			//DriverManager.registerDriver (new oracle.jdbc.driver.OracleDriver());
+			//stmt=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			//stmt = con.createStatement();
+			//stmt=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		} catch(Exception e) {
+			System.err.println("Unable to open mysql jdbc connection. The error is as follows,\n");
+			System.err.println(e.getMessage());
+			throw(e);
+		}
+
+		if (_sqlConstructor != null) {
+			sqlConsturctor = _sqlConstructor;
+		}
+		else {
+			sqlConsturctor = new DefaultSQLConstructor();
+		}
+		
+		if (_sqlValidator != null) {
+			sqlValidator = _sqlValidator;
+		}
+		else {
+			sqlValidator = new DefaultSQLValidator();
+		}
 	}
 
 	private void init()
@@ -96,5 +140,19 @@ public class SQLProvider
 			lastOp = "invoke";
 		}
 	}
+	
+	// Default SQLProvider Delgates
+	private class DefaultSQLConstructor extends SQLConstructor {
+		@Override
+		public String construction(String args) {
+			return args;
+		}
+	}
 
+	private class DefaultSQLValidator implements SQLValidator {
+		public boolean validateQuery(String query) {
+			// TODO: finish validation
+			return true;
+		}
+	}
 }
