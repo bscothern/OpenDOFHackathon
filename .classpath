@@ -2,5 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/Braden/Documents/workspace/OpenDOFHackathon/DOF_JARS/dof-inet-7.0.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Users/Braden/Documents/workspace/OpenDOFHackathon/DOF_JARS/dof-inet-7.0.2.jar"/>
+	<classpathentry kind="lib" path="/Users/Braden/Documents/workspace/OpenDOFHackathon/DOF_JARS/dof-oal-7.0.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="/Users/Braden/Documents/workspace/OpenDOFHackathon/DOF_JARS/dof-oal-7.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
