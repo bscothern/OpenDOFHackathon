@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-import org.opendof.training.security.DOFAbstraction;
-
-
 public class MainSQLRequestor {
 	
 	 static DOFAbstraction requestorDofAbstraction; // Represents the whole DOF

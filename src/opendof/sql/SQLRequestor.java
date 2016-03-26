@@ -26,8 +26,8 @@ public class SQLRequestor {
     DOFOperation.Set activeSetOperation = null;
     DOFOperation.Invoke activeInvokeOperation = null;
     
-    int TIMEOUT = 100;
-    int MIN_PERIOD = 200;
+    int TIMEOUT = 1000;
+    int MIN_PERIOD = 2000;
 	 
 	public SQLRequestor(DOFSystem system){
 		mySystem = system;
