@@ -18,7 +18,6 @@ public class MainSQLRequestor {
         requestorDofAbstraction.createConnection("128.110.78.153", PORT);
         requestor = new SQLRequestor(requestorDofAbstraction.createDOFSystem("requestor"));
         
-        System.out.println("HEY!!!");
         
         requestor.sendSetRequest(true);
         

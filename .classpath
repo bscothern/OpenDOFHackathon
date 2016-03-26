@@ -2,10 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="DOF_JARS/dof-inet-7.0.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="DOF_JARS/dof-inet-7.0.2.jar"/>
-	<classpathentry kind="lib" path="DOF_JARS/dof-oal-7.0.2-javadoc.jar"/>
-	<classpathentry kind="lib" path="DOF_JARS/dof-oal-7.0.2.jar"/>
+	<classpathentry kind="lib" path="DOF_JARS/dof-oal-7.0.2.jar" sourcepath="DOF_JARS">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Aaron%20Kc%20Hsui/Desktop/OpenDOF/lib-java/dof-oal-7.0.2-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="DOF_JARS/mysql.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
