@@ -31,7 +31,7 @@ public class SQLProvider
 
 	// DB Fields
 	Connection con;
-	SQLConstructor sqlConsturctor = null;
+	SQLConstructor sqlConstructor = null;
 	SQLValidator sqlValidator = null;
 
 	// TODO: remove this constructor
@@ -61,10 +61,10 @@ public class SQLProvider
 		}
 
 		if (_sqlConstructor != null) {
-			sqlConsturctor = _sqlConstructor;
+			sqlConstructor = _sqlConstructor;
 		}
 		else {
-			sqlConsturctor = new DefaultSQLConstructor();
+			sqlConstructor = new DefaultSQLConstructor();
 		}
 		
 		if (_sqlValidator != null) {
@@ -141,7 +141,7 @@ public class SQLProvider
 //			lastOp = "invoke";
 			System.out.println("Method invoked");
 			String query = DOFType.asString(parameters.get(0));
-			String results = sqlConsturctor.construction(query);
+			String results = sqlConstructor.construction(query);
 			boolean valid = sqlValidator.validateQuery(results);
 			if (valid)
 			{
@@ -181,7 +181,7 @@ public class SQLProvider
 		}
 	}
 
-	// Default SQLProvider Delgates
+	// Default SQLProvider Delegates
 	private class DefaultSQLConstructor extends SQLConstructor {
 		
 		public DefaultSQLConstructor() {
@@ -194,9 +194,8 @@ public class SQLProvider
 		}
 	}
 
-	private class DefaultSQLValidator implements SQLValidator {
+	private class DefaultSQLValidator extends SQLValidator {
 		public boolean validateQuery(String query) {
-			// TODO: finish validation
 			return true;
 		}
 	}
