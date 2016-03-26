@@ -36,6 +36,7 @@ public class TBAInterface {
 	public static final DOFInterface.Event EVENT_ALARM_TRIGGERED;
 	public static final DOFInterface.Exception EXCEPTION_BAD_TIME_VALUE;
 	
+	
 	public static final DOFInterface.Property PROPERTY_SELECT_USERQUERY;
 	public static final DOFInterface.Property PROPERTY_SELECT_NAMEQUERY;
 	public static final DOFInterface.Method METHOD_SELECT_QUERY;
