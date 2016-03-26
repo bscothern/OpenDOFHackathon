@@ -18,7 +18,7 @@ public class SQLRequestor {
 
 	DOFSystem mySystem;
 	DOFObject providerObject;
-	DOFObjectID providerObjectID = DOFObjectID.create("[3:provider@opendof.org]");
+	DOFObjectID providerObjectID = DOFObjectID.create("[63:{12345678}]");
 	
 	Map<String, DOFObject> objectMap = new HashMap<String, DOFObject>(2);
 	
