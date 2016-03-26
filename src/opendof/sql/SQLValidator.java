@@ -1,5 +1,5 @@
 package opendof.sql;
 
 public interface SQLValidator {
-	boolean validateQuery(String query);
+	public boolean validateQuery(String query);
 }
