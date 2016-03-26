@@ -6,5 +6,10 @@
 	<classpathentry kind="lib" path="/Users/Braden/Documents/workspace/OpenDOFHackathon/DOF_JARS/dof-inet-7.0.2.jar"/>
 	<classpathentry kind="lib" path="/Users/Braden/Documents/workspace/OpenDOFHackathon/DOF_JARS/dof-oal-7.0.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="/Users/Braden/Documents/workspace/OpenDOFHackathon/DOF_JARS/dof-oal-7.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Bharath/workspace/OpenDOFHackathon/DOF_JARS/dof-inet-7.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Bharath/workspace/OpenDOFHackathon/DOF_JARS/dof-inet-7.0.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Bharath/workspace/OpenDOFHackathon/DOF_JARS/dof-oal-7.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Bharath/workspace/OpenDOFHackathon/DOF_JARS/dof-oal-7.0.2-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Bharath/workspace/OpenDOFHackathon/DOF_JARS/mysql.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
