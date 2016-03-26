@@ -56,7 +56,6 @@ public class SQLRequestor {
 	            	System.out.println("Before");
 	            	return true;
 	            }
-	           
 	            
 	            return false;
 	        } catch (DOFProviderException e) {
@@ -77,6 +76,9 @@ public class SQLRequestor {
 		            DOFString query = new DOFString(_query);
 		            DOFResult<List<DOFValue>> myResults = providerObject.invoke(TBAInterface.METHOD_SELECT_QUERY, 5000, query);        
 		            List<DOFValue> myValueList = myResults.get();
+		            for(DOFValue dv: myValueList){
+		            	System.out.println(dv);
+		            }
 		            return myValueList;
 		        } catch (DOFException e) {
 		            System.err.println("Invoke failed: " + e.getMessage());
