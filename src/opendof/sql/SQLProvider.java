@@ -47,7 +47,6 @@ public class SQLProvider
 
 	public SQLProvider(DOFSystem system, String url, String userName, String password,
 			SQLConstructor _sqlConstructor, SQLValidator _sqlValidator) throws Exception {
-		// TODO: Connect to DB
 		mySystem = system;
 		init();
 		
