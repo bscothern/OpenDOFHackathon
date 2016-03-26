@@ -18,7 +18,6 @@ import org.opendof.core.oal.DOFValue;
 import org.opendof.core.oal.value.DOFBoolean;
 import org.opendof.core.oal.value.DOFDateTime;
 import org.opendof.core.oal.value.DOFString;
-import org.opendof.training.security.TBAInterface;
 
 
 
@@ -71,18 +70,19 @@ public class SQLRequestor {
 	  }
 	 
 	 
-	 public Boolean sendSelectQuery(String _query) throws DOFException{
-	    	if(mySystem.getState().isAuthorized())
+	 public List<DOFValue> sendSelectQuery(String _query) throws DOFException{
+	    	
+		 if(mySystem.getState().isAuthorized())
 	    	{
 		    	try{
-		            DOFString alarmTimeParameter = new DOFString(_query);
-		            DOFResult<List<DOFValue>> myResults = providerObject.invoke(TBAInterface.METHOD_SELECT_QUERY, 5000, alarmTimeParameter);        
+		            DOFString query = new DOFString(_query);
+		            DOFResult<List<DOFValue>> myResults = providerObject.invoke(TBAInterface.METHOD_SELECT_QUERY, 5000, query);        
 		            List<DOFValue> myValueList = myResults.get();
-		            return DOFType.asBoolean(myValueList.get(0));
+		            return myValueList;
 		        } catch (DOFException e) {
 		            System.err.println("Invoke failed: " + e.getMessage());
 		            throw e;
-		        }
+		        } 
 	    	} else
 	    	{
 	    		//The system is not ready yet.

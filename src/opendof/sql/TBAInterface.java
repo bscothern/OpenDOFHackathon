@@ -40,6 +40,8 @@ public class TBAInterface {
 	public static final DOFInterface.Property PROPERTY_SELECT_NAMEQUERY;
 	public static final DOFInterface.Method METHOD_SELECT_QUERY;
 	
+	//public static final DOFInterface.Exception EXCEPTION_BAD_QUERY;
+	
 	static {
     	DEF = new DOFInterface.Builder(IID)
     			.addProperty(1, true, true, IS_ACTIVE)

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+import org.opendof.core.oal.DOFException;
+
 public class MainSQLRequestor {
 	
 	 static DOFAbstraction requestorDofAbstraction; // Represents the whole DOF
@@ -20,6 +22,13 @@ public class MainSQLRequestor {
         
         
         requestor.sendSetRequest(true);
+        
+        try {
+			requestor.sendSelectQuery("UserTable|");
+		} catch (DOFException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         Scanner sc = new Scanner(System.in);
     	while(!sc.nextLine().toLowerCase().equals("stop"));
