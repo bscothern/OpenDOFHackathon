@@ -78,7 +78,7 @@ public class SQLProvider
 	private void init()
 	{
 		myObject = mySystem.createObject(myOID);
-		myObject.beginProvide(TBAInterface.DEF, new ProviderListener());
+		myObject.beginProvide(SQLInterface.DEF, new ProviderListener());
 	}
 
 	public boolean getActive()
@@ -153,6 +153,8 @@ public class SQLProvider
 					ResultSet resultSet = preparedStatement.executeQuery();
 					
 					ResultSetMetaData rsmd = resultSet.getMetaData();
+					for (int col = 1; col < rsmd.getColumnCount(); col++)
+						record += rsmd.getColumnName(col) + "\t";
 //					table = new ArrayList<String>();
 //					int currentRow = 0;
 					while(resultSet.next())
@@ -188,19 +190,44 @@ public class SQLProvider
 	}
 
 	// Default SQLProvider Delegates
+	/**
+	 * This is the default SQLConstructor object that is used as the SQLProvider's SQLConstructor when not provided.
+	 * It expects the connected SQLRequestor to be sending valid SQL queries rather than being constructed from the
+	 * SQLProvider's call to it's SQLConstructor object. This is not secure but is convenient.
+	 */
 	private class DefaultSQLConstructor extends SQLConstructor {
 		
+		/**
+		 * This will fully initialize the SQLConstructor with an empty String[] for the queryType.
+		 */
 		public DefaultSQLConstructor() {
 			setQueryType(new String[] {});
 		}
 
 		@Override
+		/**
+		 * There is no typical SQLContructor implementation to create a SQL query in this method.
+		 * 
+		 * @param args A SQL query.
+		 * @return args is assumed to be valid SQL query and returned immediately
+		 */
 		public String construction(String args) {
 			return args;
 		}
 	}
 
+	/**
+	 * This is the default SQLValidator object that is used as the SQLProvider's SQLValidator when not provided.
+	 * It assumes that everything is valid which is not secure but is convenient.
+	 */
 	private class DefaultSQLValidator extends SQLValidator {
+		
+		/**
+		 * There is no typical SQLValidator implementation to validate a SQL query in this method.
+		 * 
+		 * @param query The query that is to be validated.
+		 * @return This is always true. It assumes that the query is valid regardless of its contents.
+		 */
 		public boolean validateQuery(String query) {
 			return true;
 		}
