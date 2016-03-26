@@ -78,7 +78,7 @@ public class SQLProvider
 	private void init()
 	{
 		myObject = mySystem.createObject(myOID);
-		myObject.beginProvide(TBAInterface.DEF, new ProviderListener());
+		myObject.beginProvide(SQLInterface.DEF, new ProviderListener());
 	}
 
 	public boolean getActive()
@@ -153,6 +153,8 @@ public class SQLProvider
 					ResultSet resultSet = preparedStatement.executeQuery();
 					
 					ResultSetMetaData rsmd = resultSet.getMetaData();
+					for (int col = 1; col < rsmd.getColumnCount(); col++)
+						record += rsmd.getColumnName(col) + "\t";
 //					table = new ArrayList<String>();
 //					int currentRow = 0;
 					while(resultSet.next())
