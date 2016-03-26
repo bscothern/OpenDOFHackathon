@@ -18,9 +18,6 @@ import org.opendof.core.oal.DOFValue;
 import org.opendof.core.oal.value.DOFBoolean;
 import org.opendof.core.oal.value.DOFDateTime;
 import org.opendof.core.oal.value.DOFString;
-import org.opendof.training.security.TBAInterface;
-
-
 
 public class SQLRequestor {
 
