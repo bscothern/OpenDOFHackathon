@@ -45,6 +45,9 @@ public class SQLProvider
 	public SQLProvider(DOFSystem system, String url, String userName, String password,
 			SQLConstructor _sqlConstructor, SQLValidator _sqlValidator) throws Exception {
 		// TODO: Connect to DB
+		mySystem = system;
+		init();
+		
 		try{
 			Class.forName ("com.mysql.jdbc.Driver").newInstance ();
 			con = DriverManager.getConnection (url, userName, password);
