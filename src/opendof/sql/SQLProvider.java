@@ -21,7 +21,7 @@ public class SQLProvider
 	// DOF Fields
 	DOFSystem mySystem;
 	DOFObject myObject;
-	DOFObjectID myOID = DOFObjectID.create("[3:provider@opendof.org]");
+	DOFObjectID myOID = DOFObjectID.create("[63:{12345678}]");
 	String lastOp = "undefined";
 	boolean isActive = false;
 	Date alarmTime;
