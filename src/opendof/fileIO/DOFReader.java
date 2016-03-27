@@ -1,4 +1,4 @@
-package opendof.sql;
+package opendof.fileIO;
 
 import java.util.Date;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.opendof.core.oal.value.DOFString;
 
 import java.sql.*;
 
-public class SQLProvider
+public class DOFReader
 {
 	// DOF Fields
 	DOFSystem mySystem;
@@ -33,11 +33,11 @@ public class SQLProvider
 	SQLConstructor sqlConstructor = null;
 	SQLValidator sqlValidator = null;
 
-	public SQLProvider(DOFSystem system, String url, String userName, String password) throws Exception {
+	public DOFReader(DOFSystem system, String url, String userName, String password) throws Exception {
 		this(system, url, userName, password, null, null);
 	}
 
-	public SQLProvider(DOFSystem system, String url, String userName, String password,
+	public DOFReader(DOFSystem system, String url, String userName, String password,
 			SQLConstructor _sqlConstructor, SQLValidator _sqlValidator) throws Exception {
 		mySystem = system;
 		init();
