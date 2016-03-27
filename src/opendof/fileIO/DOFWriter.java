@@ -1,15 +1,8 @@
 package opendof.fileIO;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Date;
 import java.util.List;
 
 import org.opendof.core.oal.DOFObject;
@@ -93,21 +86,23 @@ public class DOFWriter
 
 			try {
 				File f = new File(path + outFileName);
-				if (!f.canWrite()) {
-					throw new IOException("Cannot write to path: " + f.getCanonicalPath());
+				if (f.exists() && !f.canWrite()) {
+					request.respond(new DOFErrorException("Cannot write to path: " + f.getCanonicalPath()));
 				}
-				
+
 				if (op == DOFWriterOp.Overwrite && !f.exists()) {
 					f.delete();
 				}
+				
+				if (op == DOFWriterOp.Append && !f.exists()) {
+					f.createNewFile();
+				}
 
 				Files.write(f.toPath(), DOFType.asString(parameters.get(2)).getBytes(), op.toOption());
+				request.respond(new DOFBoolean(true));
 			}
 			catch (Exception e) {
 				request.respond(new DOFErrorException(e.getMessage()));
-				return;
-			}
-			finally {
 			}
 		}
 	}

@@ -1,6 +1,5 @@
 package opendof.fileIO;
 
-import java.util.List;
 
 import org.opendof.core.oal.DOFException;
 import org.opendof.core.oal.DOFValue;
