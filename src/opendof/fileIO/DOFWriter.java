@@ -1,7 +1,12 @@
 package opendof.fileIO;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Date;
@@ -27,21 +32,24 @@ public class DOFWriter
 	DOFObject myObject;
 	DOFObjectID myOID = DOFObjectID.create("[63:{12345678}]");
 	String lastOp = "undefined";
-	
+
 	private String path;
 
 	public DOFWriter(DOFSystem system, String _path) throws IOException {
 		File f = new File(_path);
 		if (!f.canWrite()) {
-			throw new IOException("Cannot write to path: " + _path);
+			throw new IOException("Cannot write to path: " + f.getCanonicalPath());
 		}
-		
+
 		// General DOF init
 		mySystem = system;
 		init();
-		
+
 		// DOFWriter Init
 		path = _path;
+		if (path.charAt(path.length() -1) != '/') {
+			path += "/";
+		}
 	}
 
 	private void init()
@@ -67,28 +75,39 @@ public class DOFWriter
 		@Override
 		public void get(Provide operation, DOFRequest.Get request, Property property)
 		{
-			request.respond(myDOFBoolean);
 			lastOp = "get";
 		}
 
 		@Override
 		public void set(Provide operation, DOFRequest.Set request, Property property, DOFValue value)
 		{
-			request.respond();
 			lastOp = "set";
-			System.out.println("Requestor set: " + value);
 		}
 
 		@Override
 		public void invoke(Provide operation, DOFRequest.Invoke request, Method method, List<DOFValue> parameters)
 		{
 			System.out.println("Method invoked");
+			String outFileName = DOFType.asString(parameters.get(0));
+			DOFWriterOp op = DOFWriterOp.values()[DOFType.asInt(parameters.get(1))];
+
 			try {
+				File f = new File(path + outFileName);
+				if (!f.canWrite()) {
+					throw new IOException("Cannot write to path: " + f.getCanonicalPath());
+				}
 				
+				if (op == DOFWriterOp.Overwrite && !f.exists()) {
+					f.delete();
+				}
+
+				Files.write(f.toPath(), DOFType.asString(parameters.get(2)).getBytes(), op.toOption());
 			}
 			catch (Exception e) {
 				request.respond(new DOFErrorException(e.getMessage()));
 				return;
+			}
+			finally {
 			}
 		}
 	}
