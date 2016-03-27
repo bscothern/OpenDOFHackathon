@@ -37,7 +37,7 @@ public class DOFWriter
 	private void init()
 	{
 		myObject = mySystem.createObject(myOID);
-		myObject.beginProvide(DOFIO.DEF, new ProviderListener());
+		myObject.beginProvide(DOFIOInterface.DEF, new ProviderListener());
 	}
 
 	public String getPath() {
@@ -73,41 +73,13 @@ public class DOFWriter
 		public void invoke(Provide operation, DOFRequest.Invoke request, Method method, List<DOFValue> parameters)
 		{
 			System.out.println("Method invoked");
-			String query = DOFType.asString(parameters.get(0));
-			String results = sqlConstructor.construction(query);
-			boolean valid = sqlValidator.validateQuery(results);
-			if (valid)
-			{
-				String record = "";
-				try
-				{
-					PreparedStatement preparedStatement = con.prepareStatement(results);
-					ResultSet resultSet = preparedStatement.executeQuery();
-
-					ResultSetMetaData rsmd = resultSet.getMetaData();
-					for (int col = 1; col < rsmd.getColumnCount(); col++)
-						record += rsmd.getColumnName(col) + "\t";
-
-					while(resultSet.next())
-					{
-						for (int col = 1; col < rsmd.getColumnCount(); col++)
-							record += resultSet.getString(col) + "\t";
-						record += "\n";
-					}
-					preparedStatement.close();
-
-				}
-				catch (SQLException e)
-				{
-					e.printStackTrace();
-				}
-
-				System.out.println("Sent back proper response");
-				request.respond(new DOFString(record));
+			try {
+				
 			}
-			else
-				System.out.println("Sent back exception");
-			request.respond(new DOFErrorException("Invalid query"));
+			catch (Exception e) {
+				request.respond(new DOFErrorException(e.getMessage()));
+				return;
+			}
 		}
 	}
 }
