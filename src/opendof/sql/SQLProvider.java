@@ -13,10 +13,11 @@ import org.opendof.core.oal.DOFErrorException;
 import org.opendof.core.oal.DOFInterface.Method;
 import org.opendof.core.oal.DOFInterface.Property;
 import org.opendof.core.oal.DOFOperation.Provide;
-import org.opendof.core.oal.value.DOFBoolean;
 import org.opendof.core.oal.value.DOFString;
 
 import java.sql.*;
+
+
 
 public class SQLProvider
 {
@@ -73,33 +74,19 @@ public class SQLProvider
 		myObject.beginProvide(SQLInterface.DEF, new ProviderListener());
 	}
 
-	public String getLastOperation()
-	{
-		if (lastOp != null)
-			return lastOp;
-		else
-			return "undefined";
-	}
-
 	public class ProviderListener extends DOFObject.DefaultProvider
 	{
 
 		@Override
 		public void get(Provide operation, DOFRequest.Get request, Property property)
 		{
-			DOFBoolean myDOFBoolean = new DOFBoolean(isActive);
-			request.respond(myDOFBoolean);
-			lastOp = "get";
-			System.out.println("Requestor requested: " + isActive);
+
 		}
 
 		@Override
 		public void set(Provide operation, DOFRequest.Set request, Property property, DOFValue value)
 		{
-			isActive = DOFType.asBoolean(value);
-			request.respond();
-			lastOp = "set";
-			System.out.println("Requestor set: " + value);
+		
 		}
 
 		@Override
