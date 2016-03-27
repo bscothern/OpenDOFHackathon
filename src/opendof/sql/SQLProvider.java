@@ -120,10 +120,13 @@ public class SQLProvider
 				catch (SQLException e)
 				{
 					e.printStackTrace();
+					request.respond(new DOFErrorException(e.getMessage()));
+					return;
 				}
 
 				System.out.println("Sent back proper response");
 				request.respond(new DOFString(record));
+				return;
 			}
 			else
 				System.out.println("Sent back exception");

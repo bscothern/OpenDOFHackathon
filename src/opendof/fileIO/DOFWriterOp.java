@@ -1,5 +1,5 @@
 package opendof.fileIO;
 
 public enum DOFWriterOp {
-	Append, Overwrite
+	Append, Overwrite, OnCreate
 }
