@@ -7,7 +7,7 @@ import org.opendof.core.oal.DOFValue;
 
 import opendof.sql.DOFAbstraction;
 
-public class MainReaderRequestor
+public class MainWriterRequestor
 {
 
 	public static void main(String[] args) throws DOFException
@@ -16,13 +16,10 @@ public class MainReaderRequestor
 		dof.createDOF();
 		dof.createConnection("localhost", 3567);
 		Requestor requestor = new Requestor(dof.createDOFSystem("requestor"));
+		int op = DOFWriterOp.Append.ordinal();
 		
-		List<DOFValue> fileContents = requestor.getFileContents("abc.txt");
-		String contents = fileContents.get(0).toString();
-		
-		System.out.println(contents);
+		boolean successful = requestor.writeFileContents("def.txt", op, "Hello world");
+		System.out.println(successful);
 	}
-
-	
 
 }

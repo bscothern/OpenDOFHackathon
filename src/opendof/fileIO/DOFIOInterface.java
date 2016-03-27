@@ -4,12 +4,14 @@ import org.opendof.core.oal.DOFInterface;
 import org.opendof.core.oal.DOFInterfaceID;
 import org.opendof.core.oal.DOFType;
 import org.opendof.core.oal.value.DOFBoolean;
+import org.opendof.core.oal.value.DOFInt32;
 import org.opendof.core.oal.value.DOFString;
 
 public class DOFIOInterface
 {
 	public static final DOFType FILE_NAME = new DOFString.Type(3, 141);
 	public static final DOFType FILE_CONTENTS = new DOFString.Type(3, 1000000);
+	public static final DOFType WRITE_OPERATION = DOFInt32.TYPE;
 	public static final DOFType WRITE_SUCCESS = DOFBoolean.TYPE;
 
 	public static final DOFInterface DEF;
@@ -25,7 +27,7 @@ public class DOFIOInterface
 	{
 		DEF = new DOFInterface.Builder(IID)
 				.addMethod(READ_FILE_ID, new DOFType[] { FILE_NAME }, new DOFType[] { FILE_CONTENTS })
-				.addMethod(WRITE_FILE_ID, new DOFType[] { FILE_NAME, FILE_CONTENTS } , new DOFType[] {WRITE_SUCCESS})
+				.addMethod(WRITE_FILE_ID, new DOFType[] { FILE_NAME, WRITE_OPERATION, FILE_CONTENTS } , new DOFType[] {WRITE_SUCCESS})
 				.build();
 		
 		METHOD_READ_FILE = DEF.getMethod(READ_FILE_ID);
