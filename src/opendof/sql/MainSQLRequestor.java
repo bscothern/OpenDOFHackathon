@@ -14,7 +14,7 @@ public class MainSQLRequestor {
 	
 	 static DOFAbstraction requestorDofAbstraction; // Represents the whole DOF
 	 static SQLRequestor requestor;
-	 static String IPADDRESS = "128.110.78.153"; 
+	 static String IPADDRESS = "198.69.31.59"; 
 	 static int PORT = 3567;
 
 	public static void main(String[] args){
