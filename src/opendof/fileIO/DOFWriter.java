@@ -1,6 +1,9 @@
 package opendof.fileIO;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +31,16 @@ public class DOFWriter
 	private String path;
 
 	public DOFWriter(DOFSystem system, String _path) throws IOException {
+		File f = new File(_path);
+		if (!f.canWrite()) {
+			throw new IOException("Cannot write to path: " + _path);
+		}
+		
+		// General DOF init
 		mySystem = system;
 		init();
-
+		
+		// DOFWriter Init
 		path = _path;
 	}
 
