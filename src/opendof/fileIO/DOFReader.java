@@ -27,11 +27,17 @@ public class DOFReader
 	DOFSystem mySystem;
 	DOFObject myObject;
 	DOFObjectID myOID = DOFObjectID.create("[63:{12345678}]");
+	String PATH;
 
-	public DOFReader(DOFSystem system)
+	public DOFReader(DOFSystem system, String directoryPath) throws FileNotFoundException
 	{
 		mySystem = system;
 		init();
+		File dir = new File(directoryPath);
+		if (!dir.exists())
+			throw new FileNotFoundException("Directory does not exist");
+		else
+			PATH = directoryPath;
 	}
 
 	private void init()
@@ -44,7 +50,7 @@ public class DOFReader
 	{
 		public String getFileContents(String path)
 		{
-			File file = new File(path);
+			File file = new File(PATH + path);
 			try
 			{
 				Scanner scanner = new Scanner(file);
@@ -58,18 +64,6 @@ public class DOFReader
 			{
 				return null;
 			}
-
-		}
-
-		@Override
-		public void get(Provide operation, DOFRequest.Get request, Property property)
-		{
-
-		}
-
-		@Override
-		public void set(Provide operation, DOFRequest.Set request, Property property, DOFValue value)
-		{
 
 		}
 
