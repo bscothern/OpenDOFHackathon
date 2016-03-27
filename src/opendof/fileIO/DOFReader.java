@@ -1,6 +1,5 @@
 package opendof.fileIO;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,7 +18,6 @@ import org.opendof.core.oal.value.DOFString;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.*;
 
 public class DOFReader
 {
