@@ -9,6 +9,9 @@ import java.util.Scanner;
 import org.opendof.core.oal.DOFException;
 import org.opendof.core.oal.DOFValue;
 
+import opendof.fileIO.DOFWriterOp;
+import opendof.fileIO.Requestor;
+
 
 public class MainSQLRequestor {
 	
@@ -19,22 +22,26 @@ public class MainSQLRequestor {
 
 	public static void main(String[] args){
 	    
+		if(args.length != 2){
+			System.out.println("You need to enter the ip address and port of server");
+			IPADDRESS = args[0];
+			PORT = Integer.parseInt(args[1]);
+			return;
+		}
 		
-        
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         
         System.out.println("======WELCOME TO DOFdb=====");
         System.out.println("Enter Number. Do you want to communicate with..");
-        System.out.println("1. SQL");
-        System.out.println("2. DOFWrite File System");
-        System.out.println("3. Twitter API");
+        System.out.println("1. SQLREQUESTOR");
+      
         
         String userInput = "";
         int val = 0;
         
         val = checkIntReponse(userInput, val, in);
         
-        if(val < 1 || val > 2){
+        if(val < 1 || val > 3){
         	System.out.println("Invalid Number");
         	return;
         }
@@ -44,7 +51,7 @@ public class MainSQLRequestor {
        System.out.println("Connecting to DOFDB... Make sure SQLDB is running");
        requestorDofAbstraction = new DOFAbstraction();
        requestorDofAbstraction.createDOF();
-       requestorDofAbstraction.createConnection("128.110.78.153", PORT);
+       requestorDofAbstraction.createConnection(IPADDRESS, PORT);
        requestor = new SQLRequestor(requestorDofAbstraction.createDOFSystem("requestor"));
             
        System.out.println("Enter Number. Which Query Search Do You Want?");
@@ -100,9 +107,10 @@ public class MainSQLRequestor {
         }
         
         }else if(val==2){
-        	 System.out.println("Enter Number. What do you want to do with Twitter?");
-             System.out.println("1. Select all tweets from user");
-             System.out.println("2. Post to twitter account");
+        	 
+        System.out.println("Enter Number. What do you want to do with your File System?");
+        System.out.println("1. Read file from connected user");
+             System.out.println("2. Write file to connected User");
       
               userInput = "";
               val = checkIntReponse(userInput, val, in);	  
@@ -113,8 +121,58 @@ public class MainSQLRequestor {
               }
               if(val == 1){
             	  
-              }else if(val == 2){
+            		DOFAbstraction dof = new DOFAbstraction();
+            		dof.createDOF();
+            		dof.createConnection(IPADDRESS, PORT);
+            		Requestor requestor = new Requestor(dof.createDOFSystem("requestor"));
+            		 
+            		
+            		System.out.println("Enter name of file:");
+            		String name = "";
+            		try {
+         				while ((name = in.readLine()) == null && name.length() == 0);
+         			} catch (IOException e) {
+         				System.out.println("Error with input.");
+         				return;
+         			}
             	  
+            		
+            		List<DOFValue> fileContents = null;
+					try {
+						fileContents = requestor.getFileContents(name);
+					} catch (DOFException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+            		String contents = fileContents.get(0).toString();
+            		
+            		System.out.println(contents);
+            		
+              }else if(val == 2){
+            	  DOFAbstraction dof = new DOFAbstraction();
+          		dof.createDOF();
+          		dof.createConnection(IPADDRESS, PORT);
+          		Requestor requestor = new Requestor(dof.createDOFSystem("requestor"));
+          		int op = DOFWriterOp.Append.ordinal();
+          		
+          		System.out.println("Enter name of file:");
+        		String name = "";
+        		try {
+     				while ((name = in.readLine()) == null && name.length() == 0);
+     			} catch (IOException e) {
+     				System.out.println("Error with input.");
+     				return;
+     			}
+        		
+        		
+        		boolean successful = true;
+				try {
+					successful = requestor.writeFileContents("def.txt", op, "Hello world");
+				} catch (DOFException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		System.out.println(successful);
               }
               
               

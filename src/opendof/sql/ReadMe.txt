@@ -10,3 +10,5 @@ provider object can easily be created into a stand alone Database bridge.
 This means that openDOF easily be used to bridge with any other Data access API. 
 We extended this proof of concept by attempting to connect a DOF bridge with 
 the Twitter API to access the data on your twitter account. 
+
+Run MainSQLProvider (change IPs) and then run MainSQLRequestor (change IPs)
