@@ -13,7 +13,7 @@ public class MainReaderProvider
 	{
 		DOFAbstraction dofAbstraction = new DOFAbstraction();
 		dofAbstraction.createDOF();
-        dofAbstraction.createServer("localhost", 3567);
+        dofAbstraction.createServer("0.0.0.0", 3567);
         
         DOFReader providerWithReader = new DOFReader(dofAbstraction.createDOFSystem("provider"), path);
         Scanner sc = new Scanner(System.in);

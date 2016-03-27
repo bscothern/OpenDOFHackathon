@@ -12,6 +12,7 @@ import org.opendof.core.oal.DOFOperation;
 import org.opendof.core.oal.DOFResult;
 import org.opendof.core.oal.DOFSystem;
 import org.opendof.core.oal.DOFValue;
+import org.opendof.core.oal.value.DOFBoolean;
 import org.opendof.core.oal.value.DOFString;
 
 public class Requestor
@@ -37,6 +38,21 @@ public class Requestor
 	public void setCurrentRequestor(String _oidString)
 	{
 		providerObject = objectMap.get(_oidString);
+	}
+	
+	public boolean writeFileContents(String fname, String cont) throws DOFException
+	{
+		if (mySystem.getState().isAuthorized())
+		{
+			DOFString filename = new DOFString(fname);
+			DOFString contents = new DOFString(cont);
+			
+			DOFResult<List<DOFValue>> results = providerObject.invoke(DOFIOInterface.METHOD_WRITE_FILE, DOF.TIMEOUT_NEVER, filename, contents);
+			List<DOFValue> valList = results.get();
+			boolean success = DOFBoolean.Type.asBoolean(valList.get(0));
+			return success;
+		}
+		return false;
 	}
 
 	public List<DOFValue> getFileContents(String fname) throws DOFException
